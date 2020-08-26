@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 060c1ca647319424d90ad62ed20ae4ad
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - rigidbody2D: {instanceID: 0}
+  - boxCollider2D: {instanceID: 0}
+  - bullet: {fileID: 316345100971942310, guid: 248a181e47d634708a88b70624573a1d, type: 3}
+  - healthBar: {fileID: 794522516370432442, guid: 950904646e0274ed1921ee534f54478a,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
