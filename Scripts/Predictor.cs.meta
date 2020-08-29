@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 1e62a73a917ca4510a2201b31fa4770d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - rigidbody2D: {instanceID: 0}
+  - coin: {fileID: 1860713408836391742, guid: 227f8a1b4762343ac9bce802c7702d2f, type: 3}
+  - orb: {fileID: 5059989063711281542, guid: 3f0ed2339920444a2ad862584002a1e1, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
