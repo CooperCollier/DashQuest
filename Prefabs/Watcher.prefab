@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  aggroRadius: 18
+  aggroRadius: 14
   maxHealth: 20
   reward: 5
   attack: 10

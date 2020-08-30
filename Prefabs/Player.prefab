@@ -155,9 +155,9 @@ MonoBehaviour:
   startX: -6
   startY: 2
   startingHealth: 100
-  dashDistance: 0
-  moveSpeed: 20
-  jumpSpeed: 30
+  dashDistance: 7
+  moveSpeed: 10
+  jumpSpeed: 25
   dashSpeed: 50
   detectPlatform:
     serializedVersion: 2

@@ -6,7 +6,7 @@ public class Player : MonoBehaviour {
 
 	//--------------------------------------------------------------------------------
 
-	/* 7 Adjustable character attributes, set for the entire game. */
+	/* Adjustable character attributes, set for the entire game. */
 
 	[SerializeField]
     float startX;
@@ -312,7 +312,7 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Door") {
-        	Debug.Log("You Win!");
+        	// Fill this in.
         }
     }
 
@@ -432,9 +432,9 @@ public class Player : MonoBehaviour {
     /* This function is run whenever the player wants to shoot a bullet. */
 
     private void Shoot(Vector2 destination) {
-        Instantiate(bullet, transform.position, Quaternion.identity);
-    	bullet.start = transform.position;
-    	bullet.destination = destination;
+        Bullet thisBullet = Instantiate(bullet, transform.position, Quaternion.identity);
+    	thisBullet.start = transform.position;
+    	thisBullet.destination = destination;
     }
 
     //--------------------------------------------------------------------------------

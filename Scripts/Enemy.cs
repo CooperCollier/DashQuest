@@ -44,8 +44,8 @@ public abstract class Enemy : MonoBehaviour {
     	if (health <= 0) {
     		Destroy(this.gameObject);
             for (int i = 0; i < reward; i++) {
-                Instantiate(coin);
-                coin.location = currentLocation;
+                Coin thisCoin = Instantiate(coin);
+                thisCoin.location = currentLocation;
             }
     	} else {
             SpecificUpdate();

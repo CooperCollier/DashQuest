@@ -68,9 +68,9 @@ public class Predictor : Enemy {
     }
 
     public void Shoot() {
-    	Instantiate(orb);
-		orb.start = currentLocation;
-		orb.destination = Camera.main.WorldToScreenPoint(Player.getLocation());
+    	Orb thisOrb = Instantiate(orb);
+		thisOrb.start = currentLocation;
+		thisOrb.destination = Camera.main.WorldToScreenPoint(Player.getLocation());
     }
 
     //--------------------------------------------------------------------------------
