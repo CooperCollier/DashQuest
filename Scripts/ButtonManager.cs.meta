@@ -4,7 +4,15 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - pauseMenuUI: {fileID: 5202239908986296727, guid: 3a5dce8e1a65a471cae9de057a74d917,
+  - pauseMenuUI: {instanceID: 0}
+  - retryMenuUI: {instanceID: 0}
+  - resumeButton: {instanceID: 0}
+  - retryButton: {instanceID: 0}
+  - quitButton1: {instanceID: 0}
+  - quitButton2: {instanceID: 0}
+  - head: {fileID: -7641866636145434780, guid: 7b807d474b7044087b3a4b6ef2f42c59, type: 3}
+  - body: {fileID: -9021202156091815187, guid: 49ebef5cd42c84ceb97a71b49fadacf0, type: 3}
+  - player: {fileID: 5693960523508375199, guid: 947ca881f5dea42e585726db286d5127,
       type: 3}
   executionOrder: 0
   icon: {instanceID: 0}

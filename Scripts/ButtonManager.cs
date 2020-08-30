@@ -17,7 +17,12 @@ public class ButtonManager : MonoBehaviour {
     public GameObject quitButton1;
     public GameObject quitButton2;
 
+    public RagdollHead head;
+    public RagdollBody body;
+    public GameObject playerObj;
+
     void Start() {
+        playerObj = GameObject.FindGameObjectsWithTag("Player")[0].gameObject;
         paused = false;
         dead = false;
         Time.timeScale = 1f;
@@ -30,12 +35,8 @@ public class ButtonManager : MonoBehaviour {
     }
 
     void Update() {
-        if (Player.getStatusCode() == 11) {
-            retryMenuUI.SetActive(true);
-            retryButton.SetActive(true);
-            quitButton2.SetActive(true);
-            Time.timeScale = 0f;
-            dead = true;
+        if (Player.getStatusCode() == 11 && !dead) {
+            Die();
         }
     }
 
@@ -63,6 +64,24 @@ public class ButtonManager : MonoBehaviour {
 
     public void QuitGame() {
         SceneManager.LoadScene(0);
+    }
+
+    public void Die() {
+        RagdollHead thisHead = Instantiate(head);
+        RagdollBody thisBody = Instantiate(body);
+        thisHead.transform.position = Player.getLocation() + new Vector2(0, 1);
+        thisBody.transform.position = Player.getLocation();
+        playerObj.SendMessage("Invisible");
+        dead = true;
+        StartCoroutine(ShowRetryScreen());
+    }
+
+    IEnumerator ShowRetryScreen() {
+        yield return new WaitForSeconds(2);
+        retryMenuUI.SetActive(true);
+        retryButton.SetActive(true);
+        quitButton2.SetActive(true);
+        Time.timeScale = 0f;
     }
 
 }

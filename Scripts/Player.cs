@@ -106,6 +106,7 @@ public class Player : MonoBehaviour {
         boxCollider2D = transform.GetComponent<BoxCollider2D>();
         transform.position = new Vector2(startX, startY);
         health = startingHealth;
+        GetComponent<Renderer>().enabled = true;
     }
 
     //--------------------------------------------------------------------------------
@@ -350,7 +351,7 @@ public class Player : MonoBehaviour {
     /* Push the player slightly in one direction. */
     private void PushFromEnemy(Vector2 enemy) {
     	Vector2 difference = location - enemy;
-        rigidbody2D.AddForce(difference * 10, ForceMode2D.Impulse);
+        rigidbody2D.velocity = new Vector2(difference.normalized.x * 50, 0);
     }
 
     /* Translate the player. Mainly used when the player is standing on a 
@@ -358,6 +359,12 @@ public class Player : MonoBehaviour {
      * script). */
     public void Translate(Vector2 vector) {
         transform.Translate(vector * Time.deltaTime);
+    }
+
+    /* Called by the ButtonManager script through SendMessage once the
+     * player dies. */
+    public void Invisible() {
+        GetComponent<Renderer>().enabled = false;
     }
 
     //--------------------------------------------------------------------------------
