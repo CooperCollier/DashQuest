@@ -95,11 +95,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ac74cb38ca5f4749bc98f7607804f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  start: {x: 0, y: 0}
+  end: {x: 0, y: 0}
+  arrived: 0
+  player: {fileID: 5693960523508375199, guid: 947ca881f5dea42e585726db286d5127, type: 3}
   speed: 0
   startX: 0
   startY: 0
   endX: 0
   endY: 0
+  detectPlayer:
+    serializedVersion: 2
+    m_Bits: 256
+  boxCollider2D: {fileID: 0}
+  rigidbody2D: {fileID: 0}
 --- !u!61 &7286970102594791937
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -117,7 +126,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
+    oldSize: {x: 3, y: 3}
     newSize: {x: 0.3, y: 0.3}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

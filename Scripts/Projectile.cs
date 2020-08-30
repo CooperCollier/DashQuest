@@ -18,6 +18,9 @@ public class Projectile : MonoBehaviour {
     [SerializeField]
     int attack;
 
+    [SerializeField]
+    int range;
+
     /* Start & Destination MUST be set by the entity spawning this projectile! */
     public Vector2 start;
     public Vector2 destination;
@@ -26,6 +29,8 @@ public class Projectile : MonoBehaviour {
     Vector2 move;
 
     bool arrived;
+
+    int totalTicks = 0;
 
     //--------------------------------------------------------------------------------
 
@@ -38,6 +43,10 @@ public class Projectile : MonoBehaviour {
     //--------------------------------------------------------------------------------
 
     void Update() {
+        totalTicks += 1;
+        if (totalTicks > range) {
+            Destroy(gameObject);
+        }
         location = transform.position;
     	if (location - destination == Vector2.zero) {
     		arrived = true;

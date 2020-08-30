@@ -13,12 +13,11 @@ public class Predictor : Enemy {
 	 * can change over time. */
 	private Vector2 anchor;
 
+	/* Where the predictor is trying to move to. */
 	private Vector2 move;
 
-	/* TooCloseRadius is the distance such that, if the player gets closer than
-	 * this, the predictor will retreat. */
 	[SerializeField]
-	private int tooCloseRadius;
+	LayerMask detectPlatform;
 
 	public Orb orb;
 
@@ -40,7 +39,7 @@ public class Predictor : Enemy {
 		Vector2 playerDist = playerLocation - currentLocation;
 
 		/* Check if the player is close enough to provoke the predictor. Also
-		 * check if the player is on the elft or right of the predictor. */
+		 * check if the player is on the left or right of the predictor. */
 		if (playerDist.magnitude < aggroRadius) {
 			if (playerDist.x > 0) {
 				direction = true;
@@ -48,32 +47,46 @@ public class Predictor : Enemy {
 				direction = false;
 			}
 
-			/* shoot a projectile at the player on a regular basis, and move around. */
-			if (totalTicks % 400 == 0) {
-				Instantiate(orb);
-				orb.destination = Player.getLocation();
-				orb.start = currentLocation;
-				Vector2 random = new Vector2(Random.Range(0, tooCloseRadius),
-										Random.Range(0, tooCloseRadius));
+			/* Shoot a projectile at the player on a regular basis, and move around. */
+			if (totalTicks % 300 == 0) {
+				Shoot();
+				Vector2 random = new Vector2(Random.Range(0, 10),
+										Random.Range(0, 10));
+				random = checkWall(random);
 				move = random + anchor;
-				Debug.Log(move);
 			}
 
 		}
 
-		/* Update the anchor if the player gets too close. */
-		if (playerDist.magnitude < aggroRadius && playerDist.magnitude < tooCloseRadius) {
-			anchor = new Vector2(Random.Range(anchor.x - 4, anchor.x + 4),
-								Random.Range(anchor.y - 4, anchor.y + 4));
-		}
-
 		/* Move. */
-		rigidbody2D.velocity = move.normalized * speed;
+		rigidbody2D.velocity = (move - currentLocation).normalized * speed;
 		totalTicks += 1;
 
 		/* Give my direction to the animator. */
 		gameObject.SendMessage("ReadDirection", direction);
 
+    }
+
+    public void Shoot() {
+    	Instantiate(orb);
+		orb.start = currentLocation;
+		orb.destination = Camera.main.WorldToScreenPoint(Player.getLocation());
+    }
+
+    //--------------------------------------------------------------------------------
+
+    /* This function check if the random direction we chose will push the predictor
+     * into a wall. If so, we reverse the direction. */
+    public Vector2 checkWall(Vector2 vector) {
+    	RaycastHit2D checkWall = Physics2D.Raycast(currentLocation,
+    											   (vector + anchor) - currentLocation,
+    											   0.5f,
+    											   detectPlatform);
+    	if (checkWall.collider != null) {
+    		return -1 * vector;
+    	} else {
+    		return vector;
+    	}
     }
 
     //--------------------------------------------------------------------------------

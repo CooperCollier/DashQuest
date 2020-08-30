@@ -311,10 +311,7 @@ public class Player : MonoBehaviour {
     /* Handle collisions with specific game objects. */
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.tag == "Coin") {
-        	money += 1;
-        	Destroy(other.gameObject);
-        } else if (other.tag == "Door") {
+        if (other.tag == "Door") {
         	Debug.Log("You Win!");
         }
     }
@@ -329,7 +326,10 @@ public class Player : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Spikes" && health > 0) {
+        if (collision.gameObject.tag == "Coin") {
+            money += 1;
+            Destroy(collision.gameObject);
+        } else if (collision.gameObject.tag == "Spikes" && health > 0) {
             TakeDamage(10);
         } else if (collision.gameObject.tag == "Enemy") {
             Vector2 enemy = collision.gameObject.GetComponent<Transform>().position;
@@ -338,7 +338,7 @@ public class Player : MonoBehaviour {
     }
 
     public void TakeDamage(int damage) {
-        if (health <= 0) {
+        if (health <= 0 || (statusCode >= 5 && statusCode <= 8)) {
             return;
         }
         if (iFrames == 0) {
@@ -347,13 +347,17 @@ public class Player : MonoBehaviour {
         }
     }
 
-    // TODO: Work on PushFromEnemy functionality
-    // TODO: Make player skid to a stop after running
-
     /* Push the player slightly in one direction. */
     private void PushFromEnemy(Vector2 enemy) {
     	Vector2 difference = location - enemy;
         rigidbody2D.AddForce(difference * 10, ForceMode2D.Impulse);
+    }
+
+    /* Translate the player. Mainly used when the player is standing on a 
+     * movingBox (this function is called via a sendMessage in the MovingBox
+     * script). */
+    public void Translate(Vector2 vector) {
+        transform.Translate(vector * Time.deltaTime);
     }
 
     //--------------------------------------------------------------------------------
@@ -428,7 +432,7 @@ public class Player : MonoBehaviour {
     /* This function is run whenever the player wants to shoot a bullet. */
 
     private void Shoot(Vector2 destination) {
-    	Instantiate(bullet);
+        Instantiate(bullet, transform.position, Quaternion.identity);
     	bullet.start = transform.position;
     	bullet.destination = destination;
     }

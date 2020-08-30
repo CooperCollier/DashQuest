@@ -98,18 +98,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e62a73a917ca4510a2201b31fa4770d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 6
   aggroRadius: 20
   maxHealth: 40
   reward: 20
   attack: 10
   health: 0
   rigidbody2D: {fileID: 0}
+  boxCollider2D: {fileID: 0}
   coin: {fileID: 1860713408836391742, guid: 227f8a1b4762343ac9bce802c7702d2f, type: 3}
   playerLocation: {x: 0, y: 0}
   currentLocation: {x: 0, y: 0}
   direction: 0
-  tooCloseRadius: 5
+  detectPlatform:
+    serializedVersion: 2
+    m_Bits: 1024
   orb: {fileID: 5059989063711281542, guid: 3f0ed2339920444a2ad862584002a1e1, type: 3}
 --- !u!95 &1448981226965034475
 Animator:
@@ -161,7 +164,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

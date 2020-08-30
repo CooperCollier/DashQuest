@@ -13,6 +13,8 @@ public class MovingBox : MonoBehaviour {
 	public Vector2 end;
 	public bool arrived;
 
+    public GameObject playerObj;
+
 	[SerializeField]
 	public int speed;
 
@@ -28,14 +30,23 @@ public class MovingBox : MonoBehaviour {
 	[SerializeField]
 	public int endY;
 
+    [SerializeField]
+    LayerMask detectPlayer;
+
+    public BoxCollider2D boxCollider2D;
+    public Rigidbody2D rigidbody2D;
+
     //--------------------------------------------------------------------------------
 
     void Start() {
         
+        rigidbody2D = transform.GetComponent<Rigidbody2D>();
+        boxCollider2D = transform.GetComponent<BoxCollider2D>();
         start = new Vector2(startX, startY);
         end = new Vector2(endX, endY);
         arrived = false;
         transform.position = start;
+        playerObj = GameObject.FindGameObjectsWithTag("Player")[0].gameObject;
 
     }
 
@@ -55,12 +66,28 @@ public class MovingBox : MonoBehaviour {
 
     	if (!arrived) {
     		transform.Translate(move * speed * Time.deltaTime);
+            if (startX != endX && checkPlayer()) {
+                playerObj.SendMessage("Translate", move * speed);
+            }
     	} else {
     		transform.Translate(-move * speed * Time.deltaTime);
+            if (startX != endX && checkPlayer()) {
+                playerObj.SendMessage("Translate", -move * speed);
+            }
     	}
         
     }
 
     //--------------------------------------------------------------------------------
+
+    bool checkPlayer() {
+        RaycastHit2D checkPlayer = Physics2D.BoxCast(boxCollider2D.bounds.center,
+                                                      boxCollider2D.bounds.size,
+                                                      0f,
+                                                      Vector2.up,
+                                                      0.3f,
+                                                      detectPlayer);
+        return (checkPlayer.collider != null);
+    }
 
 }

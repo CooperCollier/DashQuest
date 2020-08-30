@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -5741815020845962078}
   - component: {fileID: 6564603520245990527}
   - component: {fileID: 9190535853187803219}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Watcher
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -145,16 +145,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d707ccb915a47bb8f95cb01a5eb0b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  aggroRadius: 12
+  speed: 5
+  aggroRadius: 18
   maxHealth: 20
   reward: 5
   attack: 10
   health: 0
   rigidbody2D: {fileID: 0}
+  boxCollider2D: {fileID: 0}
   coin: {fileID: 1860713408836391742, guid: 227f8a1b4762343ac9bce802c7702d2f, type: 3}
   playerLocation: {x: 0, y: 0}
   currentLocation: {x: 0, y: 0}
+  detectEnemy:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!95 &9190535853187803219
 Animator:
   serializedVersion: 3

@@ -24,6 +24,7 @@ public abstract class Enemy : MonoBehaviour {
 	public int health;
 
 	public Rigidbody2D rigidbody2D;
+    public BoxCollider2D boxCollider2D;
     public Coin coin;
 
 	public Vector2 playerLocation;
@@ -33,6 +34,7 @@ public abstract class Enemy : MonoBehaviour {
 
     void Start() {
         rigidbody2D = transform.GetComponent<Rigidbody2D>();
+        boxCollider2D = transform.GetComponent<BoxCollider2D>();
         health = maxHealth;
     }
 
