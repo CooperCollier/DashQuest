@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -8182158816282235332}
   - component: {fileID: -3559780989572400890}
   - component: {fileID: -5304525745395471363}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Predictor
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -109,10 +109,10 @@ MonoBehaviour:
   coin: {fileID: 1860713408836391742, guid: 227f8a1b4762343ac9bce802c7702d2f, type: 3}
   playerLocation: {x: 0, y: 0}
   currentLocation: {x: 0, y: 0}
-  direction: 0
   detectPlatform:
     serializedVersion: 2
     m_Bits: 1024
+  direction: 0
   orb: {fileID: 5059989063711281542, guid: 3f0ed2339920444a2ad862584002a1e1, type: 3}
 --- !u!95 &1448981226965034475
 Animator:

@@ -30,6 +30,9 @@ public abstract class Enemy : MonoBehaviour {
 	public Vector2 playerLocation;
 	public Vector2 currentLocation;
 
+    [SerializeField]
+    public LayerMask detectPlatform;
+
     //--------------------------------------------------------------------------------
 
     void Start() {
@@ -57,6 +60,14 @@ public abstract class Enemy : MonoBehaviour {
     void OnCollisionStay2D(Collision2D collision) {
         if (collision.gameObject.tag == "Player") {
         	collision.gameObject.SendMessage("TakeDamage", attack);
+            AvoidClip((Vector2) collision.gameObject.transform.position);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.tag == "Player") {
+            collision.gameObject.SendMessage("TakeDamage", attack);
+            AvoidClip((Vector2) collision.gameObject.transform.position);
         }
     }
 
@@ -67,6 +78,18 @@ public abstract class Enemy : MonoBehaviour {
             return;
         } else {
             health -= damage;
+        }
+    }
+
+    //--------------------------------------------------------------------------------
+
+    public void AvoidClip(Vector2 player) {
+        RaycastHit2D CheckWall = Physics2D.Raycast(currentLocation,
+                                                  currentLocation - player,
+                                                  3f,
+                                                  detectPlatform);
+        if (CheckWall.collider != null) {
+            transform.Translate((player - currentLocation).normalized * 2);
         }
     }
 

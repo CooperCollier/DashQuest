@@ -16,9 +16,6 @@ public class Predictor : Enemy {
 	/* Where the predictor is trying to move to. */
 	private Vector2 move;
 
-	[SerializeField]
-	LayerMask detectPlatform;
-
 	public Orb orb;
 
 	int totalTicks = 0;
@@ -80,7 +77,7 @@ public class Predictor : Enemy {
     public Vector2 checkWall(Vector2 vector) {
     	RaycastHit2D checkWall = Physics2D.Raycast(currentLocation,
     											   (vector + anchor) - currentLocation,
-    											   0.5f,
+    											   1f,
     											   detectPlatform);
     	if (checkWall.collider != null) {
     		return -1 * vector;

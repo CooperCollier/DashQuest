@@ -2680,12 +2680,12 @@ PrefabInstance:
     - target: {fileID: -5274382884178921876, guid: 1d6dbd5cc5915462683728d65f76632e,
         type: 3}
       propertyPath: m_Points.Array.data[80].y
-      value: 9.4550085
+      value: 9.32559
       objectReference: {fileID: 0}
     - target: {fileID: -5274382884178921876, guid: 1d6dbd5cc5915462683728d65f76632e,
         type: 3}
       propertyPath: m_Points.Array.data[81].x
-      value: -0.11331867
+      value: -0.116002694
       objectReference: {fileID: 0}
     - target: {fileID: -5274382884178921876, guid: 1d6dbd5cc5915462683728d65f76632e,
         type: 3}
@@ -3536,6 +3536,11 @@ PrefabInstance:
       propertyPath: tooCloseRadius
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: -3783027753825277090, guid: f4644569325314c6ca9a336b380cee64,
+        type: 3}
+      propertyPath: detectPlatform.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
     - target: {fileID: -3559780989572400890, guid: f4644569325314c6ca9a336b380cee64,
         type: 3}
       propertyPath: m_Offset.x
@@ -3565,6 +3570,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Predictor
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778640516763157586, guid: f4644569325314c6ca9a336b380cee64,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 9213131915080264778, guid: f4644569325314c6ca9a336b380cee64,
         type: 3}

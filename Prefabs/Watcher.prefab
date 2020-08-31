@@ -156,6 +156,9 @@ MonoBehaviour:
   coin: {fileID: 1860713408836391742, guid: 227f8a1b4762343ac9bce802c7702d2f, type: 3}
   playerLocation: {x: 0, y: 0}
   currentLocation: {x: 0, y: 0}
+  detectPlatform:
+    serializedVersion: 2
+    m_Bits: 1024
   detectEnemy:
     serializedVersion: 2
     m_Bits: 2048

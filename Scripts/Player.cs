@@ -34,6 +34,9 @@ public class Player : MonoBehaviour {
     [SerializeField]
     LayerMask detectPlatform;
 
+    [SerializeField]
+    LayerMask detectEnemy;
+
     /* Objects for utility purposes. */
     public Rigidbody2D rigidbody2D;
     public BoxCollider2D boxCollider2D;
@@ -50,7 +53,7 @@ public class Player : MonoBehaviour {
     int dashState = 0;
 
     /* Invincibility frames right after taking damage */
-    int iFrames = 60;
+    int iFrames = 0;
 
     /* How long the jump button has been held down for. As this number increases, 
      * the player's jump gets higher. This number resets to zero upon hitting the ground. */
@@ -67,6 +70,17 @@ public class Player : MonoBehaviour {
 
     /* Multiply this by speed when calculating movement. */
     float runMultiplier;
+
+    /* How many frames the player has been in the same position. This number is
+     * updated anytime the player moves. This variable is used to end the dash early
+     * in case the player gets stuck. */
+    int staying = 0;
+
+    /* If this number is greater than zero, the player should not be able to
+     * start a dash. This is used in the AvoidClip function because sometimes it
+     * can transport the player to a place in the air which would make them dash 
+     * inadvertently. */
+    int stopDash = 0;
 
     /* Location is the player's current location. */
     public static Vector2 location;
@@ -113,17 +127,25 @@ public class Player : MonoBehaviour {
 
     void Update() {
 
-    	/* Update the location variable & status code. */
-        location = (Vector2) transform.position;
- 		setStatusCode();
+        /* Set the value of the 'staying' variable and update the 'location'
+         * variable. */
+        if ((location - (Vector2) transform.position).magnitude < 0.05) {
+            staying += 1;
+        } else {
+            location = (Vector2) transform.position;
+            staying = 0;
+        }
+
+    	  /* Update the status code. */
+ 		    setStatusCode();
 
         /* Press W to jump if the player is on the ground. */
-    	if (Input.GetKeyDown(KeyCode.W)) {
-    		if (isGrounded() || coyoteFrames > 0) {
+    	  if (Input.GetKeyDown(KeyCode.W)) {
+    		    if (isGrounded() || coyoteFrames > 0) {
                 jumpTime = 0;
                 rigidbody2D.velocity = Vector2.up * jumpSpeed;
-    		}
-    	}
+    		    }
+    	  }
 
         /* Jump time increases while the jump button is held down in the air.
          * The number 61 was chosen so that jumpTime doesn't become 60 again until 
@@ -137,45 +159,54 @@ public class Player : MonoBehaviour {
             jumpTime = 61;
         }
 
-    	/* Click the mouse to shoot if the player is on the ground. 
-    	 * Click the mouse to dash if the player is in the air. */
-    	if (Input.GetMouseButtonDown(0)) {
-    		if (isGrounded()) {
-    			Shoot(Input.mousePosition);
-    		} else if (statusCode == 3 || statusCode == 4) {
-    			startDash(Input.mousePosition);
-    		}
-    	}
+    	  /* Click the mouse to shoot if the player is on the ground. 
+    	   * Click the mouse to dash if the player is in the air. */
+    	  if (Input.GetMouseButtonDown(0)) {
+    		    if (isGrounded()) {
+    			  Shoot(Input.mousePosition);
+    		    } else if ((statusCode == 3 || statusCode == 4) && stopDash == 0) {
+    			    startDash(Input.mousePosition);
+    		    }
+    	  }
 
-    	/* Update the coyote frames based on wether or not the player is grounded. */
-    	if (!isGrounded() && coyoteFrames > 0) {
-    		coyoteFrames -= 1;
-    	} else if (isGrounded()) {
-    		coyoteFrames = 30;
-    	}
+    	  /* Update the coyote frames based on wether or not the player is grounded. */
+    	  if (!isGrounded() && coyoteFrames > 0) {
+    		  coyoteFrames -= 1;
+    	  } else if (isGrounded()) {
+    		  coyoteFrames = 30;
+    	  }
 
-    	/* Get keyboard input to move, unless the player is dashing. */
-    	if (statusCode >= 5 && statusCode <= 8) {
-    		continueDash();
-    	} else {
-    		Move();
-    	}
+    	  /* Get keyboard input to move, unless the player is dashing. */
+    	  if (statusCode >= 5 && statusCode <= 8) {
+    		  continueDash();
+    	  } else {
+    		  Move();
+    	  }
 
-    	/* The dash state resets to zero upon standing on a platform. */
-    	if (isGrounded()) {
-    		dashState = 0;
-    	}
+    	  /* The dash state resets to zero upon standing on a platform. */
+    	  if (isGrounded()) {
+    		  dashState = 0;
+    	  }
 
-    	/* Update the health bar. */
-    	healthBar.setHealth(health);
+    	  /* Update the health bar. */
+    	  healthBar.setHealth(health);
 
         /* Always decrement invincibility frames. */
         if (iFrames > 0) {
             iFrames -= 1;
+            if (iFrames == 1) {
+                AvoidClip();
+                Physics2D.IgnoreLayerCollision(8, 11, false);
+            }
         }
 
         /* Set the runTime & runMultiplier variables. */
         Run();
+
+        /* Decrement stopDash if it is positive. */
+        if (stopDash > 0) {
+            stopDash -= 1;
+        }
 
     }
 
@@ -303,7 +334,7 @@ public class Player : MonoBehaviour {
 
         /* If none of the raycasts are below a wall, we default to the 1/4 player height one. */
         offset = new Vector2(boxCollider2D.bounds.size.x, boxCollider2D.bounds.size.y * (float) 0.25);
-    	transform.Translate((location + offset) * Time.deltaTime);
+    	  transform.Translate((location + offset) * Time.deltaTime);
 
     }
 
@@ -343,15 +374,16 @@ public class Player : MonoBehaviour {
             return;
         }
         if (iFrames == 0) {
-            iFrames = 60;
+            iFrames = 120;
             health -= damage;
+            Physics2D.IgnoreLayerCollision(8, 11, true);
         }
     }
 
     /* Push the player slightly in one direction. */
     private void PushFromEnemy(Vector2 enemy) {
     	Vector2 difference = location - enemy;
-        rigidbody2D.velocity = new Vector2(difference.normalized.x * 50, 0);
+        rigidbody2D.velocity = difference.normalized * 10;
     }
 
     /* Translate the player. Mainly used when the player is standing on a 
@@ -365,6 +397,55 @@ public class Player : MonoBehaviour {
      * player dies. */
     public void Invisible() {
         GetComponent<Renderer>().enabled = false;
+    }
+
+    /* Right after the player gets hit, the collision between player & enemy layes
+     * is disabled. Right when it is re-enabled, if the player is standing inside
+     * an enemy & right next to a wall, the player can get pushed through the wall.
+     * This function counter-acts the bug by pushing the player upwards out of the
+     * enemy. It is called right before the invincibility frames run out. */
+    private void AvoidClip() {
+
+        float moveX = 0;
+        float moveY = 0;
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemy");
+
+        RaycastHit2D leftWall = Physics2D.Raycast((Vector2) boxCollider2D.bounds.min,
+                                                  Vector2.left,
+                                                  .3f,
+                                                  detectPlatform,
+                                                  ~detectEnemy);
+        RaycastHit2D rightWall = Physics2D.Raycast((Vector2) boxCollider2D.bounds.max,
+                                                  Vector2.right,
+                                                  .3f,
+                                                  detectPlatform,
+                                                  ~detectEnemy);
+
+        RaycastHit2D up = Physics2D.Raycast((Vector2) boxCollider2D.bounds.max,
+                                                  Vector2.up,
+                                                  .3f,
+                                                  detectPlatform,
+                                                  ~detectEnemy);
+
+        if (leftWall.collider != null) {
+            moveX = boxCollider2D.bounds.size.x * 1.5f;
+        } else if (rightWall.collider != null) {
+            moveX = -boxCollider2D.bounds.size.x * 1.5f;
+        }
+
+        if (up.collider != null) {
+        	moveY = 0;
+        } else {
+        	moveY = boxCollider2D.bounds.size.y * 1.5f;
+        }
+
+        for (int i = 0; i < objects.Length; i++) {
+            if (((Vector2) objects[i].transform.position - location).magnitude < 0.5) {
+                transform.Translate(new Vector2(moveX, moveY));
+                stopDash = 30;
+            }
+        }
+
     }
 
     //--------------------------------------------------------------------------------
@@ -522,7 +603,9 @@ public class Player : MonoBehaviour {
             endDash();
         } else if ((dashDestination - location).magnitude < 0.5) {
             endDash();
-        } 
+        } else if (staying > 5) {
+            endDash();
+        }
 
     }
 
