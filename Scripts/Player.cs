@@ -413,18 +413,17 @@ public class Player : MonoBehaviour {
     }
 
     private int xDirection() {
-        if (rigidbody2D.velocity.x == 0) {
-        	return 0;
-        } else if (rigidbody2D.velocity.x < 0) {
-        	return -1;
-        } else if (rigidbody2D.velocity.x > 0) {
-        	return 1;
-        }
-        return 0;
+    	if (Input.GetKey(KeyCode.A)) {
+    		return -1;
+    	} else if (Input.GetKey(KeyCode.D)) {
+    		return 1;
+    	} else {
+    		return 0;
+    	}
     }
 
     private int yDirection() {
-        if (rigidbody2D.velocity.y == 0) {
+        if (rigidbody2D.velocity.y < 0.1 && rigidbody2D.velocity.y > -0.1) {
         	return 0;
         } else if (rigidbody2D.velocity.y < 0) {
         	return -1;

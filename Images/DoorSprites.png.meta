@@ -1,13 +1,19 @@
 fileFormatVersion: 2
-guid: 367fb0bd7aebd4fd595a4ee0bed4aacb
+guid: 0c64f8a2a65a24a199b60d8baae62516
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5158901414864087487
-    second: PredictorSpritesRight_0
+      213: -7479781390151944694
+    second: DoorSprites_0
   - first:
-      213: -5707206129348879649
-    second: PredictorSpritesRight_1
+      213: -2962531703935522114
+    second: DoorSprites_1
+  - first:
+      213: 4272184890422156511
+    second: DoorSprites_2
+  - first:
+      213: -1262353921143904822
+    second: DoorSprites_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -105,13 +111,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PredictorSpritesRight_0
+      name: DoorSprites_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 27
-        height: 37
+        width: 33
+        height: 42
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,20 +125,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fb9eb38f089189740800000000000000
-      internalID: 5158901414864087487
+      spriteID: a067a6a847a723890800000000000000
+      internalID: -7479781390151944694
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PredictorSpritesRight_1
+      name: DoorSprites_1
       rect:
         serializedVersion: 2
-        x: 27
+        x: 33
         y: 0
-        width: 27
-        height: 37
+        width: 33
+        height: 42
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,8 +146,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fda5a30734eebc0b0800000000000000
-      internalID: -5707206129348879649
+      spriteID: eba27178c19f2e6d0800000000000000
+      internalID: -2962531703935522114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DoorSprites_2
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 0
+        width: 33
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdc5768d589d94b30800000000000000
+      internalID: 4272184890422156511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DoorSprites_3
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 0
+        width: 33
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac565650cc73b7ee0800000000000000
+      internalID: -1262353921143904822
       vertices: []
       indices: 
       edges: []
