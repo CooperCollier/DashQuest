@@ -25,6 +25,7 @@ public abstract class Enemy : MonoBehaviour {
 
 	public Rigidbody2D rigidbody2D;
     public BoxCollider2D boxCollider2D;
+    public SpriteRenderer spriteRenderer;
     public Coin coin;
 
 	public Vector2 playerLocation;
@@ -33,9 +34,12 @@ public abstract class Enemy : MonoBehaviour {
     [SerializeField]
     public LayerMask detectPlatform;
 
+    int redFrames = 0;
+
     //--------------------------------------------------------------------------------
 
     void Start() {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         rigidbody2D = transform.GetComponent<Rigidbody2D>();
         boxCollider2D = transform.GetComponent<BoxCollider2D>();
         health = maxHealth;
@@ -51,6 +55,11 @@ public abstract class Enemy : MonoBehaviour {
                 thisCoin.location = currentLocation;
             }
     	} else {
+            if (redFrames == 0) {
+                spriteRenderer.color = Color.white;
+            } else {
+                redFrames -= 1;
+            }
             SpecificUpdate();
     	}
     }
@@ -78,6 +87,8 @@ public abstract class Enemy : MonoBehaviour {
             return;
         } else {
             health -= damage;
+            redFrames = 15;
+            spriteRenderer.color = Color.red;
         }
     }
 

@@ -40,6 +40,7 @@ public class Player : MonoBehaviour {
     /* Objects for utility purposes. */
     public Rigidbody2D rigidbody2D;
     public BoxCollider2D boxCollider2D;
+    public SpriteRenderer spriteRenderer;
     public Bullet bullet;
     public HealthBar healthBar;
 
@@ -116,6 +117,7 @@ public class Player : MonoBehaviour {
 
     /* Just initialize important variables. */
     void Start() {
+    	spriteRenderer = GetComponent<SpriteRenderer>();
     	rigidbody2D = transform.GetComponent<Rigidbody2D>();
         boxCollider2D = transform.GetComponent<BoxCollider2D>();
         transform.position = new Vector2(startX, startY);
@@ -197,6 +199,8 @@ public class Player : MonoBehaviour {
             if (iFrames == 1) {
                 AvoidClip();
                 Physics2D.IgnoreLayerCollision(8, 11, false);
+            } else if (iFrames == 60) {
+            	spriteRenderer.color = Color.white;
             }
         }
 
@@ -377,6 +381,7 @@ public class Player : MonoBehaviour {
             iFrames = 120;
             health -= damage;
             Physics2D.IgnoreLayerCollision(8, 11, true);
+            spriteRenderer.color = Color.red;
         }
     }
 

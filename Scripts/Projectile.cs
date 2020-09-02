@@ -32,6 +32,9 @@ public class Projectile : MonoBehaviour {
 
     int totalTicks = 0;
 
+    [SerializeField]
+    string name;
+
     //--------------------------------------------------------------------------------
 
     void Start() {
@@ -45,7 +48,7 @@ public class Projectile : MonoBehaviour {
     void Update() {
         totalTicks += 1;
         if (totalTicks > range) {
-            Destroy(gameObject);
+            StartCoroutine(Despawn());
         }
         location = transform.position;
     	if (location - destination == Vector2.zero) {
@@ -67,19 +70,33 @@ public class Projectile : MonoBehaviour {
         }
     	if (friendly) {
         	if (other.tag != "Player") {
-            	Destroy(gameObject);
+                StartCoroutine(Despawn());
         	}
         	if (other.tag == "Enemy") {
         		other.gameObject.SendMessage("TakeDamage", attack);
         	}
         } else {
         	if (other.tag != "Enemy") {
-            	Destroy(gameObject);
+                StartCoroutine(Despawn());
         	}
         	if (other.tag == "Player") {
         		other.gameObject.SendMessage("TakeDamage", attack);
         	}
         }
+    }
+
+    //--------------------------------------------------------------------------------
+
+    IEnumerator Despawn() {
+        speed = 0;
+        if (name == "bullet") {
+            gameObject.SendMessage("DespawnBullet");
+            yield return new WaitForSeconds(0.1f);
+        } else if (name == "orb") {
+            gameObject.SendMessage("DespawnOrb");
+            yield return new WaitForSeconds(0.07f);
+        }
+        Destroy(gameObject);
     }
 
     //--------------------------------------------------------------------------------

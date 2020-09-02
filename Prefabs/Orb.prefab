@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7572203227615184035}
   - component: {fileID: 1074640122871228364}
   - component: {fileID: 5059989063711281542}
+  - component: {fileID: -7289468530814857729}
+  - component: {fileID: 3202647676710493643}
   m_Layer: 0
   m_Name: Orb
   m_TagString: Enemy
@@ -118,3 +120,38 @@ MonoBehaviour:
   range: 1000
   start: {x: 9.963008, y: 64.087814}
   destination: {x: 1055, y: 532}
+  name: orb
+--- !u!95 &-7289468530814857729
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7178616101440892689}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6f0f0a22a203c4ad89dd2f8a65285dd3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3202647676710493643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7178616101440892689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8814a94fbfd354cf8a5d7019b79f76ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alive: 0
+  bullet: {fileID: 316345100971942310, guid: 248a181e47d634708a88b70624573a1d, type: 3}
+  orb: {fileID: 5059989063711281542}
