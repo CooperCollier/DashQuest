@@ -6,6 +6,8 @@ public class Projectile : MonoBehaviour {
 
     //--------------------------------------------------------------------------------
     
+    /* Adjustable traits for each projectile. */
+
     [SerializeField]
     int speed;
 
@@ -21,19 +23,31 @@ public class Projectile : MonoBehaviour {
     [SerializeField]
     int range;
 
-    /* Start & Destination MUST be set by the entity spawning this projectile! */
+    [SerializeField]
+    string name;
+
+    /* Start & Destination MUST be set by the entity spawning this projectile! 
+     *
+     * Start: where the projectile starts. 
+     * Destination: where the projectile goes toward. */
     public Vector2 start;
     public Vector2 destination;
 
+    /* the projectile's current location. */
     Vector2 location;
+
+    /* the direction that the projectile is currently moving. */
     Vector2 move;
 
+    /* If this is false, the projectile moves toward the destination. If this
+     * is true, the projectile moves away from the destination. This is to achive
+     * the effect of moving in a totally straight line that crosses the destination
+     * point exactly once. */
     bool arrived;
 
+    /* How long this projectile has existed. This is used to despawn it if it exists
+     * for longer than the specified range. */
     int totalTicks = 0;
-
-    [SerializeField]
-    string name;
 
     //--------------------------------------------------------------------------------
 
@@ -64,6 +78,8 @@ public class Projectile : MonoBehaviour {
 
     //--------------------------------------------------------------------------------
 
+    /* Handle collisions with certain gameObjects. Most collisions will just destroy
+     * the projectile. */
     void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Coin") {
             return;
@@ -87,6 +103,8 @@ public class Projectile : MonoBehaviour {
 
     //--------------------------------------------------------------------------------
 
+    /* Despawns the bullet. This is an IEnumerator because the programs needs to pause briefly
+     * so that projectile despawn animation has time ot play. */
     IEnumerator Despawn() {
         speed = 0;
         if (name == "bullet") {

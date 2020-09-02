@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1448981226965034475}
   - component: {fileID: -8182158816282235332}
   - component: {fileID: -3559780989572400890}
-  - component: {fileID: -5304525745395471363}
+  - component: {fileID: 9130685477942062661}
   m_Layer: 11
   m_Name: Predictor
   m_TagString: Enemy
@@ -106,12 +106,14 @@ MonoBehaviour:
   health: 0
   rigidbody2D: {fileID: 0}
   boxCollider2D: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   coin: {fileID: 1860713408836391742, guid: 227f8a1b4762343ac9bce802c7702d2f, type: 3}
   playerLocation: {x: 0, y: 0}
   currentLocation: {x: 0, y: 0}
   detectPlatform:
     serializedVersion: 2
     m_Bits: 1024
+  name: predictor
   direction: 0
   orb: {fileID: 5059989063711281542, guid: 3f0ed2339920444a2ad862584002a1e1, type: 3}
 --- !u!95 &1448981226965034475
@@ -180,7 +182,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.7333333, y: 2.4}
   m_EdgeRadius: 0
---- !u!114 &-5304525745395471363
+--- !u!114 &9130685477942062661
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,8 +191,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 6778640516763157586}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c9e1c5c9d70a4f9582155f6f43032f3, type: 3}
+  m_Script: {fileID: 11500000, guid: df9eb02770f2f4e719edb2f18c754fda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
-  predictor: {fileID: 0}
+  watcher: {fileID: 6564603520245990527, guid: cc5749948b7654b1fb4dd2fafc650d90, type: 3}
+  predictor: {fileID: -3783027753825277090}

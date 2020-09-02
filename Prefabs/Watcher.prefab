@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -5741815020845962078}
   - component: {fileID: 6564603520245990527}
   - component: {fileID: 9190535853187803219}
+  - component: {fileID: 9078944475981840641}
   m_Layer: 11
   m_Name: Watcher
   m_TagString: Enemy
@@ -153,12 +154,14 @@ MonoBehaviour:
   health: 0
   rigidbody2D: {fileID: 0}
   boxCollider2D: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   coin: {fileID: 1860713408836391742, guid: 227f8a1b4762343ac9bce802c7702d2f, type: 3}
   playerLocation: {x: 0, y: 0}
   currentLocation: {x: 0, y: 0}
   detectPlatform:
     serializedVersion: 2
     m_Bits: 1024
+  name: watcher
   detectEnemy:
     serializedVersion: 2
     m_Bits: 2048
@@ -181,3 +184,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &9078944475981840641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659120066579901392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df9eb02770f2f4e719edb2f18c754fda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  watcher: {fileID: 6564603520245990527}
+  predictor: {fileID: -3783027753825277090, guid: f4644569325314c6ca9a336b380cee64,
+    type: 3}

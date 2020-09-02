@@ -9,9 +9,12 @@ public class Watcher : Enemy {
 	[SerializeField]
   LayerMask detectEnemy;
 
-  int totalTicks = 0;
-
 	//--------------------------------------------------------------------------------
+
+  /* Summary of watcher AI:
+   * Cycles through 4 states. Pursuing the player, pursuing the player's x-component only,
+   * pursing the player again, and pursuing the player's y-component only. Also, try to stay
+   * away of other enemies so they don't get all clumped up. */
 
   public override void SpecificUpdate() {
       playerLocation = (Vector2) Player.getLocation();
@@ -29,7 +32,6 @@ public class Watcher : Enemy {
 		  } else {
 			    rigidbody2D.velocity = Vector2.zero;
 		  }
-      totalTicks += 1;
   }
 
     //--------------------------------------------------------------------------------

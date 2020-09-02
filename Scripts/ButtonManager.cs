@@ -6,8 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour {
 
+    //--------------------------------------------------------------------------------
+
+    /* Variables that tell wether the game is paused or the player is dead. */
 	public static bool paused;
     public static bool dead;
+
+    /* The head and body ragdolls will be instantiated when the player dies. */
+    public RagdollHead head;
+    public RagdollBody body;
+
+    /* Various utility objects.
+     * There are 2 different quit buttons because 'quit' is an option
+     * in both the retry menu and in the pause menu. */
 
 	public GameObject pauseMenuUI;
     public GameObject retryMenuUI;
@@ -16,10 +27,10 @@ public class ButtonManager : MonoBehaviour {
     public GameObject retryButton;
     public GameObject quitButton1;
     public GameObject quitButton2;
-
-    public RagdollHead head;
-    public RagdollBody body;
+    
     public GameObject playerObj;
+
+    //--------------------------------------------------------------------------------
 
     void Start() {
         playerObj = GameObject.FindGameObjectsWithTag("Player")[0].gameObject;
@@ -39,6 +50,11 @@ public class ButtonManager : MonoBehaviour {
             Die();
         }
     }
+
+    //--------------------------------------------------------------------------------
+
+    /* Functionality for pause, resume, restart, and quit buttons.
+     * 'RestartGame()' restarts just the current level, not the whole game. */
 
     public void PauseGame() {
         if (!dead) {
@@ -66,6 +82,12 @@ public class ButtonManager : MonoBehaviour {
         SceneManager.LoadScene(0);
     }
 
+    //--------------------------------------------------------------------------------
+
+    /* This tuns upon the death of the player. ShowRetryScreen() is an IEnumerator
+     * because the program should stall for 2 seconds while the ragdoll flies around
+     * before showing the retry screen. */
+
     public void Die() {
         RagdollHead thisHead = Instantiate(head);
         RagdollBody thisBody = Instantiate(body);
@@ -83,5 +105,8 @@ public class ButtonManager : MonoBehaviour {
         quitButton2.SetActive(true);
         Time.timeScale = 0f;
     }
+
+    //--------------------------------------------------------------------------------
+
 
 }

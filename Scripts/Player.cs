@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-	//--------------------------------------------------------------------------------
+	  //--------------------------------------------------------------------------------
 
-	/* Adjustable character attributes, set for the entire game. */
+	  /* Adjustable character attributes, set for the entire game. */
 
-	[SerializeField]
+	  [SerializeField]
     float startX;
 
     [SerializeField]
@@ -20,7 +20,7 @@ public class Player : MonoBehaviour {
     [SerializeField]
     int dashDistance;
 
-	[SerializeField]
+	  [SerializeField]
     float moveSpeed;
 
     [SerializeField]
@@ -29,11 +29,10 @@ public class Player : MonoBehaviour {
     [SerializeField]
     float dashSpeed;
 
-    /* Used during raycasting & boxcasting towards platforms. A platform is anything
-     * that the player can stand on and jump from. */
+    /* Two layerMasks sed during raycasting & boxcasting towards platforms.
+     * A platform is anything that the player can stand on and jump from. */
     [SerializeField]
     LayerMask detectPlatform;
-
     [SerializeField]
     LayerMask detectEnemy;
 
@@ -83,9 +82,6 @@ public class Player : MonoBehaviour {
      * inadvertently. */
     int stopDash = 0;
 
-    /* Location is the player's current location. */
-    public static Vector2 location;
-
     /* Status is an int that represents what the player is currently doing.
      *
      * 0: Idle.
@@ -107,6 +103,9 @@ public class Player : MonoBehaviour {
      * 11: Dead. */
     public static int statusCode = 0;
 
+    /* Location is the player's current location. */
+    public static Vector2 location;
+
     /* How much health the player has left. */
     public static int health;
 
@@ -115,10 +114,9 @@ public class Player : MonoBehaviour {
 
     //--------------------------------------------------------------------------------
 
-    /* Just initialize important variables. */
     void Start() {
-    	spriteRenderer = GetComponent<SpriteRenderer>();
-    	rigidbody2D = transform.GetComponent<Rigidbody2D>();
+    	  spriteRenderer = GetComponent<SpriteRenderer>();
+    	  rigidbody2D = transform.GetComponent<Rigidbody2D>();
         boxCollider2D = transform.GetComponent<BoxCollider2D>();
         transform.position = new Vector2(startX, startY);
         health = startingHealth;
@@ -193,7 +191,12 @@ public class Player : MonoBehaviour {
     	  /* Update the health bar. */
     	  healthBar.setHealth(health);
 
-        /* Always decrement invincibility frames. */
+        /* This decrements invincibility frames. The player's sprite gets changed to
+         * red upon taking damage, and this is the code is to change it back to
+         * white once enough frames have passed. Also, if the i-frames are just about to
+         * run out we need to call the avoidClip function. Also, the player stops colliding 
+         * with enemies right after taking damage, and this has the code to change the colliders 
+         * abck to normal after all the i-frames are over. */
         if (iFrames > 0) {
             iFrames -= 1;
             if (iFrames == 1) {
@@ -258,9 +261,7 @@ public class Player : MonoBehaviour {
     /* The move function is called every frame. It translates the keyboard input into
      * player movement. The HitWall function is called when the player hits a wall. If
      * the player's head is above the wall, then the player automatically climbs over. */
-
     private void Move() {
-
         if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.A)) {
             rigidbody2D.velocity = new Vector2(0, rigidbody2D.velocity.y);
         } else if (leftCollision() && !isGrounded() && Input.GetKey(KeyCode.A)) {
@@ -275,6 +276,8 @@ public class Player : MonoBehaviour {
             rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x / 2, rigidbody2D.velocity.y);
         }
     }
+
+    //--------------------------------------------------------------------------------
 
     private void HitWall(Vector2 direction) {
 
@@ -373,6 +376,11 @@ public class Player : MonoBehaviour {
         }
     }
 
+    //--------------------------------------------------------------------------------
+
+    /* Function to take damage. This starts up the invincibility frames, briefly turns the
+     * player red, and makes them stop colliding with enemies. These changes are reverted to
+     * normal in the update() function, after enough frames have passed. */
     public void TakeDamage(int damage) {
         if (health <= 0 || (statusCode >= 5 && statusCode <= 8)) {
             return;
@@ -387,7 +395,7 @@ public class Player : MonoBehaviour {
 
     /* Push the player slightly in one direction. */
     private void PushFromEnemy(Vector2 enemy) {
-    	Vector2 difference = location - enemy;
+    	  Vector2 difference = location - enemy;
         rigidbody2D.velocity = difference.normalized * 10;
     }
 
@@ -404,11 +412,14 @@ public class Player : MonoBehaviour {
         GetComponent<Renderer>().enabled = false;
     }
 
+    //--------------------------------------------------------------------------------
+
     /* Right after the player gets hit, the collision between player & enemy layes
      * is disabled. Right when it is re-enabled, if the player is standing inside
      * an enemy & right next to a wall, the player can get pushed through the wall.
      * This function counter-acts the bug by pushing the player upwards out of the
-     * enemy. It is called right before the invincibility frames run out. */
+     * enemy. It is called in update() right before the invincibility frames run out. */
+
     private void AvoidClip() {
 
         float moveX = 0;
@@ -464,7 +475,8 @@ public class Player : MonoBehaviour {
             runTime += 1;
         }
 
-        /* Calculate run multiplier based on runTime */
+        /* Calculate run multiplier based on runTime. The longer the player
+         * has been running, the faster they go. */
         if (runTime < 10) {
             runMultiplier = (float) 0.5;
         } else if (runTime < 30) {
@@ -499,22 +511,22 @@ public class Player : MonoBehaviour {
     }
 
     private int xDirection() {
-    	if (Input.GetKey(KeyCode.A)) {
-    		return -1;
-    	} else if (Input.GetKey(KeyCode.D)) {
-    		return 1;
-    	} else {
-    		return 0;
-    	}
+        if (Input.GetKey(KeyCode.A)) {
+    		    return -1;
+    	  } else if (Input.GetKey(KeyCode.D)) {
+    		    return 1;
+    	  } else {
+    		    return 0;
+    	  }
     }
 
     private int yDirection() {
         if (rigidbody2D.velocity.y < 0.1 && rigidbody2D.velocity.y > -0.1) {
-        	return 0;
+            return 0;
         } else if (rigidbody2D.velocity.y < 0) {
-        	return -1;
+        	  return -1;
         } else if (rigidbody2D.velocity.y > 0) {
-        	return 1;
+        	  return 1;
         }
         return 0;
     }
@@ -525,8 +537,8 @@ public class Player : MonoBehaviour {
 
     private void Shoot(Vector2 destination) {
         Bullet thisBullet = Instantiate(bullet, transform.position, Quaternion.identity);
-    	thisBullet.start = transform.position;
-    	thisBullet.destination = destination;
+    	  thisBullet.start = transform.position;
+    	  thisBullet.destination = destination;
     }
 
     //--------------------------------------------------------------------------------
@@ -535,20 +547,20 @@ public class Player : MonoBehaviour {
      * placeholder variable, it doesn't necessarily have to have the same 
      * value in startDash and continueDash. */
     private void startDash(Vector2 destination) {
-    	dashState = 1;
-    	destination = Camera.main.ScreenToWorldPoint(destination);
-    	Vector2 dashVector = ((Vector2) destination) - location;
-    	dashVector = dashVector.normalized * dashDistance;
-    	dashDestination = location + dashVector;
+    	  dashState = 1;
+    	  destination = Camera.main.ScreenToWorldPoint(destination);
+    	  Vector2 dashVector = ((Vector2) destination) - location;
+    	  dashVector = dashVector.normalized * dashDistance;
+    	  dashDestination = location + dashVector;
     }
 
     /* ContinueDash runs every frame while the player is dashing. */
     private void continueDash() {
 
         /* DashVector points from the player to the destination. */
-    	Vector2 dashVector = (dashDestination - location);
-    	dashVector = dashVector.normalized * dashSpeed;
-    	rigidbody2D.velocity = dashVector;
+    	  Vector2 dashVector = (dashDestination - location);
+    	  dashVector = dashVector.normalized * dashSpeed;
+    	  rigidbody2D.velocity = dashVector;
 
         /* These four boxCasts check if the player is colliding with a wall, in
          * which case the dash should end early. There was a serious bug earlier where
@@ -616,13 +628,13 @@ public class Player : MonoBehaviour {
 
     /* Ends the dash. */
     private void endDash() {
-    	rigidbody2D.velocity = Vector2.zero;
+    	  rigidbody2D.velocity = Vector2.zero;
         dashState = 2;
     }
 
     //--------------------------------------------------------------------------------
 
-    /* Detect if the player ran into a wall on their left or right. */
+    /* Detect if the player hit a wall on their left or right. */
 
     private bool leftCollision() {
         RaycastHit2D collideLeft = Physics2D.BoxCast(boxCollider2D.bounds.center, 

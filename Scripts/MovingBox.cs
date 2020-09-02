@@ -6,40 +6,46 @@ public class MovingBox : MonoBehaviour {
 
 	//--------------------------------------------------------------------------------
 
-    /* IMPORTANT: startX must ALWAYS be smaller than endX, and startY must ALWAYS
-     be smaller than endY */
+    /* IMPORTANT!!! startX must ALWAYS be smaller than endX, and startY must ALWAYS
+     * be smaller than endY */
 
+    /* Adjustable traits for each moving box. */
+
+    [SerializeField]
+    public int speed;
+
+    [SerializeField]
+    public int startX;
+
+    [SerializeField]
+    public int startY;
+
+    [SerializeField]
+    public int endX;
+
+    [SerializeField]
+    public int endY;
+
+    /* As the moving box osscilates between the start & end points,
+     * the 'arrived' variable osscilates between false and true. 
+     * arrived is true means the box is going from end to start.
+     * arrived is false means the box is going from start to end. */
 	public Vector2 start;
 	public Vector2 end;
 	public bool arrived;
 
+    /* Various utility objects. */
     public GameObject playerObj;
-
-	[SerializeField]
-	public int speed;
-
-	[SerializeField]
-	public int startX;
-
-	[SerializeField]
-	public int startY;
-
-	[SerializeField]
-	public int endX;
-
-	[SerializeField]
-	public int endY;
-
-    [SerializeField]
-    LayerMask detectPlayer;
-
     public BoxCollider2D boxCollider2D;
     public Rigidbody2D rigidbody2D;
+
+    /* Player layermask. */
+    [SerializeField]
+    LayerMask detectPlayer;
 
     //--------------------------------------------------------------------------------
 
     void Start() {
-        
         rigidbody2D = transform.GetComponent<Rigidbody2D>();
         boxCollider2D = transform.GetComponent<BoxCollider2D>();
         start = new Vector2(startX, startY);
@@ -47,7 +53,6 @@ public class MovingBox : MonoBehaviour {
         arrived = false;
         transform.position = start;
         playerObj = GameObject.FindGameObjectsWithTag("Player")[0].gameObject;
-
     }
 
     //--------------------------------------------------------------------------------
@@ -80,6 +85,8 @@ public class MovingBox : MonoBehaviour {
 
     //--------------------------------------------------------------------------------
 
+    /* This function makes the player move with the box if they're standing on top
+     * of it, so the player doesn't just slide off. */
     bool checkPlayer() {
         RaycastHit2D checkPlayer = Physics2D.BoxCast(boxCollider2D.bounds.center,
                                                       boxCollider2D.bounds.size,
@@ -89,5 +96,7 @@ public class MovingBox : MonoBehaviour {
                                                       detectPlayer);
         return (checkPlayer.collider != null);
     }
+
+    //--------------------------------------------------------------------------------
 
 }

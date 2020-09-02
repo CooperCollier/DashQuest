@@ -7,7 +7,6 @@ public class ProjectileAnimate : MonoBehaviour {
     //--------------------------------------------------------------------------------
 
     private Animator animator;
-    public bool alive;
     public Bullet bullet;
     public Orb orb;
 
@@ -17,12 +16,6 @@ public class ProjectileAnimate : MonoBehaviour {
     	animator = GetComponent<Animator>();
     	animator.SetBool("bulletStatus", true);
     	animator.SetBool("orbStatus", true);
-    }
-
-    //--------------------------------------------------------------------------------
-
-    void Update() {
-    	
     }
 
     //--------------------------------------------------------------------------------

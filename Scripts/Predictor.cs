@@ -18,14 +18,17 @@ public class Predictor : Enemy {
 
 	public Orb orb;
 
-	int totalTicks = 0;
-
 	//--------------------------------------------------------------------------------
+
+	/* Summary of predictor AI:
+	 * Always stay close to an 'anchor' location. Every 300 frames, shoot a projectile
+	 * at the player and move in a random direction. Avoid sticking to walls. */
 
     public override void SpecificUpdate() {
 
-    	/* Set the anchor at the beginning. */
-    	if (totalTicks == 0) {
+    	/* Set the anchor at the beginning. For some reason, the totalTicks variable
+    	 * appears to start after zero. */
+    	if (totalTicks < 5) {
     		anchor = transform.position;
     	}
 
@@ -39,9 +42,9 @@ public class Predictor : Enemy {
 		 * check if the player is on the left or right of the predictor. */
 		if (playerDist.magnitude < aggroRadius) {
 			if (playerDist.x > 0) {
-				direction = true;
+				gameObject.SendMessage("PredictorRight");
 			} else {
-				direction = false;
+				gameObject.SendMessage("PredictorLeft");
 			}
 
 			/* Shoot a projectile at the player on a regular basis, and move around. */
@@ -55,15 +58,12 @@ public class Predictor : Enemy {
 
 		}
 
-		/* Move. */
+		/* Move around. */
 		rigidbody2D.velocity = (move - currentLocation).normalized * speed;
-		totalTicks += 1;
-
-		/* Give my direction to the animator. */
-		gameObject.SendMessage("ReadDirection", direction);
 
     }
 
+    /* Shoot an orb at the player. */
     public void Shoot() {
     	Orb thisOrb = Instantiate(orb);
 		thisOrb.start = currentLocation;
@@ -73,7 +73,8 @@ public class Predictor : Enemy {
     //--------------------------------------------------------------------------------
 
     /* This function check if the random direction we chose will push the predictor
-     * into a wall. If so, we reverse the direction. */
+     * toward a wall. If so, we reverse the direction. This is just to minimize the 
+     * time of the predictor sitting in a corner. */
     public Vector2 checkWall(Vector2 vector) {
     	RaycastHit2D checkWall = Physics2D.Raycast(currentLocation,
     											   (vector + anchor) - currentLocation,
@@ -84,12 +85,6 @@ public class Predictor : Enemy {
     	} else {
     		return vector;
     	}
-    }
-
-    //--------------------------------------------------------------------------------
-
-    public bool getDirection() {
-    	return direction;
     }
 
     //--------------------------------------------------------------------------------

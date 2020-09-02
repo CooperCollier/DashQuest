@@ -7,31 +7,36 @@ public class EnemyAnimate : MonoBehaviour {
     //--------------------------------------------------------------------------------
 
     private Animator animator;
-    public bool direction;
-    public bool alive;
-    public Enemy enemy;
+
+    public Watcher watcher;
+    public Predictor predictor;
 
     //--------------------------------------------------------------------------------
 
     void Start() {
     	animator = GetComponent<Animator>();
+    	animator.SetBool("watcherAlive", true);
+    	animator.SetBool("predictorAlive", true);
     }
 
     //--------------------------------------------------------------------------------
 
-    void Update() {
-    	animator.SetBool("direction", direction);
-    	animator.SetBool("alive", alive);
+    void DespawnWatcher() {
+    	animator.SetBool("watcherAlive", false);
     }
 
     //--------------------------------------------------------------------------------
 
-    void ReadDirection(bool newDirection) {
-    	direction = newDirection;
+    void PredictorLeft() {
+    	animator.SetBool("predictorDirection", false);
     }
 
-    void ReadAlive(bool newAlive) {
-    	alive = newAlive;
+    void PredictorRight() {
+    	animator.SetBool("predictorDirection", true);
+    }
+
+    void DespawnPredictor() {
+    	animator.SetBool("predictorAlive", false);
     }
 
     //--------------------------------------------------------------------------------
