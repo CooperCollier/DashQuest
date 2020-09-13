@@ -16,17 +16,17 @@ public class ButtonManager : MonoBehaviour {
     public RagdollHead head;
     public RagdollBody body;
 
-    /* Various utility objects.
-     * There are 2 different quit buttons because 'quit' is an option
-     * in both the retry menu and in the pause menu. */
+    /* Various utility objects. */
 
 	public GameObject pauseMenuUI;
     public GameObject retryMenuUI;
 
     public GameObject resumeButton;
     public GameObject retryButton;
-    public GameObject quitButton1;
-    public GameObject quitButton2;
+    public GameObject quitButton;
+
+    public GameObject pauseText;
+    public GameObject retryText;
     
     public GameObject playerObj;
 
@@ -35,12 +35,10 @@ public class ButtonManager : MonoBehaviour {
     void Start() {
         playerObj = GameObject.FindGameObjectsWithTag("Player")[0].gameObject;
         paused = false;
-        dead = false;
         Time.timeScale = 1f;
         resumeButton.SetActive(false);
         retryButton.SetActive(false);
-        quitButton1.SetActive(false);
-        quitButton2.SetActive(false);
+        quitButton.SetActive(false);
         pauseMenuUI.SetActive(false);
         retryMenuUI.SetActive(false);
     }
@@ -48,6 +46,8 @@ public class ButtonManager : MonoBehaviour {
     void Update() {
         if (Player.getStatusCode() == 11 && !dead) {
             Die();
+        } else if (Player.getStatusCode() != 11) {
+            dead = false;
         }
     }
 
@@ -60,7 +60,9 @@ public class ButtonManager : MonoBehaviour {
         if (!dead) {
     	   pauseMenuUI.SetActive(true);
            resumeButton.SetActive(true);
-           quitButton1.SetActive(true);
+           quitButton.SetActive(true);
+           retryButton.SetActive(true);
+           pauseText.SetActive(true);
     	   Time.timeScale = 0f;
     	   paused = true;
         }
@@ -69,7 +71,9 @@ public class ButtonManager : MonoBehaviour {
     public void ResumeGame() {
     	pauseMenuUI.SetActive(false);
         resumeButton.SetActive(false);
-        quitButton1.SetActive(false);
+        quitButton.SetActive(false);
+        retryButton.SetActive(false);
+        pauseText.SetActive(false);
     	Time.timeScale = 1f;
     	paused = false;
     }
@@ -79,6 +83,7 @@ public class ButtonManager : MonoBehaviour {
     }
 
     public void QuitGame() {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
 
@@ -89,12 +94,12 @@ public class ButtonManager : MonoBehaviour {
      * before showing the retry screen. */
 
     public void Die() {
+        dead = true;
         RagdollHead thisHead = Instantiate(head);
         RagdollBody thisBody = Instantiate(body);
         thisHead.transform.position = Player.getLocation() + new Vector2(0, 1);
         thisBody.transform.position = Player.getLocation();
         playerObj.SendMessage("Invisible");
-        dead = true;
         StartCoroutine(ShowRetryScreen());
     }
 
@@ -102,7 +107,8 @@ public class ButtonManager : MonoBehaviour {
         yield return new WaitForSeconds(2);
         retryMenuUI.SetActive(true);
         retryButton.SetActive(true);
-        quitButton2.SetActive(true);
+        quitButton.SetActive(true);
+        retryText.SetActive(true);
         Time.timeScale = 0f;
     }
 

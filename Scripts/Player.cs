@@ -412,6 +412,10 @@ public class Player : MonoBehaviour {
         GetComponent<Renderer>().enabled = false;
     }
 
+    public void Visible() {
+        GetComponent<Renderer>().enabled = true;
+    }
+
     //--------------------------------------------------------------------------------
 
     /* Right after the player gets hit, the collision between player & enemy layes
