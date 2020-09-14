@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 
-	  //--------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------
 
-	  /* Adjustable character attributes, set for the entire game. */
+	/* Adjustable character attributes, set for the entire game. */
 
-	  [SerializeField]
+	[SerializeField]
     float startX;
 
     [SerializeField]
@@ -20,7 +21,7 @@ public class Player : MonoBehaviour {
     [SerializeField]
     int dashDistance;
 
-	  [SerializeField]
+	[SerializeField]
     float moveSpeed;
 
     [SerializeField]
@@ -349,9 +350,11 @@ public class Player : MonoBehaviour {
 
     /* Handle collisions with specific game objects. */
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.tag == "Door") {
-        	// Fill this in.
+    private void OnTriggerStay2D(Collider2D other) {
+        if (other.tag == "Door End" && Input.GetKey(KeyCode.Space)) {
+        	SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        } else if (other.tag == "Door Start" && Input.GetKey(KeyCode.Space)) {
+        	SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
         }
     }
 

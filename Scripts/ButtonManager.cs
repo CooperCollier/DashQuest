@@ -79,7 +79,7 @@ public class ButtonManager : MonoBehaviour {
     }
 
     public void RestartGame() {
-        Application.LoadLevel(Application.loadedLevel);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void QuitGame() {

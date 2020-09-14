@@ -167,6 +167,7 @@ MonoBehaviour:
     m_Bits: 2048
   rigidbody2D: {fileID: 0}
   boxCollider2D: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   bullet: {fileID: 0}
   healthBar: {fileID: 0}
 --- !u!61 &-4363164779573406934
