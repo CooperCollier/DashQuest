@@ -200,6 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   watcher: {fileID: 6564603520245990527, guid: cc5749948b7654b1fb4dd2fafc650d90, type: 3}
   predictor: {fileID: -3783027753825277090}
+  muncher: {fileID: 6648237588276969892, guid: 592a499f38fa5422db45233521e65f50, type: 3}
 --- !u!198 &-4910126967880790699
 ParticleSystem:
   m_ObjectHideFlags: 0

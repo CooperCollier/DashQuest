@@ -18,6 +18,8 @@ public class ButtonManager : MonoBehaviour {
 
     /* Various utility objects. */
 
+    public GameObject messageDoor;
+
 	public GameObject pauseMenuUI;
     public GameObject retryMenuUI;
 
@@ -48,6 +50,11 @@ public class ButtonManager : MonoBehaviour {
             Die();
         } else if (Player.getStatusCode() != 11) {
             dead = false;
+        }
+        if (Player.checkInFrontOfDoor()) {
+            messageDoor.SetActive(true);
+        } else {
+            messageDoor.SetActive(false);
         }
     }
 

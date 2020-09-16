@@ -113,6 +113,9 @@ public class Player : MonoBehaviour {
     /* How many coins the player has */
     public static int money = 0;
 
+    /* Whether the player is standing in front of a door */
+    public static bool inFrontOfDoor = false;
+
     //--------------------------------------------------------------------------------
 
     void Start() {
@@ -350,11 +353,27 @@ public class Player : MonoBehaviour {
 
     /* Handle collisions with specific game objects. */
 
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.tag == "Heart") {
+            health += 10;
+            Destroy(other.gameObject);
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D other) {
-        if (other.tag == "Door End" && Input.GetKey(KeyCode.Space)) {
-        	SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        } else if (other.tag == "Door Start" && Input.GetKey(KeyCode.Space)) {
-        	SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        if (other.tag == "Door End") {
+            if (Input.GetKey(KeyCode.Space)) {
+                inFrontOfDoor = false;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            } else {
+                inFrontOfDoor = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other) {
+        if (other.tag == "Door End") {
+            inFrontOfDoor = false;
         }
     }
 
@@ -681,6 +700,10 @@ public class Player : MonoBehaviour {
 
     public static int getMoney() {
         return money;
+    }
+
+    public static bool checkInFrontOfDoor() {
+        return inFrontOfDoor;
     }
     
     //--------------------------------------------------------------------------------

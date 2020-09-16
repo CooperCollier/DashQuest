@@ -65,6 +65,7 @@ public abstract class Enemy : MonoBehaviour {
      * each individual enemy's script. This general update() only covers things that every
      * enemy does. */
     void Update() {
+        currentLocation = transform.position;
         totalTicks += 1;
     	if (health <= 0) {
             StartCoroutine(Despawn());
@@ -123,6 +124,9 @@ public abstract class Enemy : MonoBehaviour {
             yield return new WaitForSeconds(0.4f);
         } else if (name == "predictor") {
             gameObject.SendMessage("DespawnPredictor");
+            yield return new WaitForSeconds(0.5f);
+        } else if (name == "muncher") {
+            gameObject.SendMessage("DespawnMuncher");
             yield return new WaitForSeconds(0.5f);
         }
         for (int i = 0; i < reward; i++) {

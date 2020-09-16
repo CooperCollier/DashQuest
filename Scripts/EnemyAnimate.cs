@@ -10,6 +10,7 @@ public class EnemyAnimate : MonoBehaviour {
 
     public Watcher watcher;
     public Predictor predictor;
+    public Muncher muncher;
 
     //--------------------------------------------------------------------------------
 
@@ -17,6 +18,7 @@ public class EnemyAnimate : MonoBehaviour {
     	animator = GetComponent<Animator>();
     	animator.SetBool("watcherAlive", true);
     	animator.SetBool("predictorAlive", true);
+    	animator.SetBool("MuncherAlive", true);
     }
 
     //--------------------------------------------------------------------------------
@@ -37,6 +39,20 @@ public class EnemyAnimate : MonoBehaviour {
 
     void DespawnPredictor() {
     	animator.SetBool("predictorAlive", false);
+    }
+
+    //--------------------------------------------------------------------------------
+
+    void MuncherLeft() {
+    	animator.SetBool("muncherDirection", false);
+    }
+
+    void MuncherRight() {
+    	animator.SetBool("muncherDirection", true);
+    }
+
+    void DespawnMuncher() {
+    	animator.SetBool("muncherAlive", false);
     }
 
     //--------------------------------------------------------------------------------
