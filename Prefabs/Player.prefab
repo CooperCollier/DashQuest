@@ -168,7 +168,7 @@ MonoBehaviour:
   rigidbody2D: {fileID: 0}
   boxCollider2D: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  bullet: {fileID: 0}
+  bullet: {fileID: 316345100971942310, guid: 248a181e47d634708a88b70624573a1d, type: 3}
   healthBar: {fileID: 0}
 --- !u!61 &-4363164779573406934
 BoxCollider2D:
@@ -183,7 +183,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0055766404, y: 0.18960834}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -194,5 +194,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.18, y: 0.34}
+  m_Size: {x: 0.5926762, y: 1.5891823}
   m_EdgeRadius: 0

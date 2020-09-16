@@ -119,8 +119,8 @@ public class Player : MonoBehaviour {
     //--------------------------------------------------------------------------------
 
     void Start() {
-    	  spriteRenderer = GetComponent<SpriteRenderer>();
-    	  rigidbody2D = transform.GetComponent<Rigidbody2D>();
+    	spriteRenderer = GetComponent<SpriteRenderer>();
+    	rigidbody2D = transform.GetComponent<Rigidbody2D>();
         boxCollider2D = transform.GetComponent<BoxCollider2D>();
         transform.position = new Vector2(startX, startY);
         health = startingHealth;
